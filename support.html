@@ -15,7 +15,24 @@ li{margin:.4em 0}
 <p>ShotSyncCam is a companion app for Wi-Fi body cameras. Currently supported hardware: <b>VIEVU LE4</b>.</p>
 
 <h2 id="camera-wifi">Turn on camera Wi-Fi</h2>
-<p>ShotSyncCam connects over the camera’s own Wi-Fi network. If you do not see a camera network on your iPhone, the camera’s Wi-Fi may be off. On a VIEVU LE4 you can turn it on from the camera’s USB serial console.</p>
+<p>ShotSyncCam connects over the camera’s own Wi-Fi network. If you do not see a camera network on your iPhone, the camera’s Wi-Fi may be off.</p>
+
+<p><b>Important — used cameras and Wi-Fi:</b></p>
+<ul>
+<li><b>New cameras</b> usually ship with Wi-Fi On. You should see a network named like <code>LE4-XXXXXX</code> when the camera is powered on. No special cable is needed.</li>
+<li><b>Used or former agency cameras</b> may have had Wi-Fi turned Off by the previous owner in VIEVU’s desktop software. That saved setting is reapplied every time the camera starts, so the camera will not show a Wi-Fi network and the iPhone app cannot turn it on by itself (it can only connect after the network is already up).</li>
+<li>To turn Wi-Fi on again you need one of the following:
+  <ul>
+  <li>The VIEVU USB-to-serial (FTDI) console cable, then the serial steps below (<code>custom wifi on</code>). This lasts only until the camera powers off; you must run it again after each power-on.</li>
+  <li>VIEVU’s own desktop software (VIEVU Solution / VERIPATROL with Solution Connector, or a VIEVU dock): open Settings → Cameras, set Wi-Fi to On, Save, then connect the camera so the setting is written. VIEVU discontinued that software in July 2025, so many users no longer have it.</li>
+  </ul>
+</li>
+<li>Without the serial cable or that software, you cannot turn Wi-Fi on for a camera that was saved as Off.</li>
+<li>If the camera will not stay powered on without being plugged in, the battery may be worn or flat. Charge it fully and try again.</li>
+<li><b>Before buying a used LE4:</b> ask whether its Wi-Fi network appears when the camera is powered on.</li>
+</ul>
+
+<p>On a VIEVU LE4 you can turn Wi-Fi on for the current power session from the camera’s USB serial console:</p>
 <ol>
 <li>Connect the camera to a computer using the serial / FTDI leg of the camera’s USB Y-cable (the data or console connector, not a charge-only cable).</li>
 <li>Open a serial terminal at <b>115200 8N1</b> (115200 baud, 8 data bits, no parity, 1 stop bit). Examples: <code>screen</code> or <code>picocom</code> on macOS and Linux, or PuTTY on Windows.</li>
@@ -25,7 +42,7 @@ li{margin:.4em 0}
 <li>To turn Wi-Fi off later, type <code>custom wifi off</code> at the same <code>cmd&gt;</code> prompt and press Enter.</li>
 </ol>
 <p>The Wi-Fi password is the factory default printed in your camera documentation.</p>
-<p>The access point may not stay on after the camera powers off. If the network disappears after a restart, run <code>custom wifi on</code> again.</p>
+<p>The serial <code>custom wifi on</code> command does not change the camera’s saved Wi-Fi preference. If the network disappears after the camera powers off, run it again (or use VIEVU’s software to save Wi-Fi On, if you still have it).</p>
 <p><b>Safety:</b> Do not run other console commands unless you understand them. This is unofficial guidance, not from the camera manufacturer, and you use it at your own risk. ShotSyncCam is a third-party companion app and is not affiliated with or endorsed by VIEVU.</p>
 
 <h2 id="pick-list">Choosing among several cameras</h2>
