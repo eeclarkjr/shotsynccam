@@ -1,3 +1,49 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ShotSyncCam Support</title><style>body{font-family:-apple-system,sans-serif;max-width:720px;margin:2em auto;padding:0 1em;line-height:1.5}</style></head><body>
-<h1>ShotSyncCam Support</h1><p>ShotSyncCam is a companion app for Wi-Fi body cameras. Currently supported hardware: <b>VIEVU LE4</b>.</p><h2>FAQ</h2><p><b>Can't connect?</b> Make sure the camera's Wi-Fi is on (network name begins with LE4-), and allow Location and Local Network access in Settings › ShotSyncCam.</p><p><b>Where are my clips?</b> In the app's Library, and in the Files app under On My iPhone › ShotSyncCam.</p><p><b>Camera time wrong?</b> Open Status and tap Sync Clock.</p><p><b>Will other cameras work?</b> Not yet; more camera profiles may be added.</p><p>For help, email us and include your iPhone model and iOS version.</p>
-<p>Contact: <a href="mailto:mtvernonmobile@gmail.com">mtvernonmobile@gmail.com</a></p><p>&copy; 2026 Edward Clark</p></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ShotSyncCam Support</title>
+<style>
+body{font-family:-apple-system,sans-serif;max-width:720px;margin:2em auto;padding:0 1em;line-height:1.5}
+code,kbd{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.95em}
+li{margin:.4em 0}
+</style>
+</head>
+<body>
+<h1>ShotSyncCam Support</h1>
+<p>ShotSyncCam is a companion app for Wi-Fi body cameras. Currently supported hardware: <b>VIEVU LE4</b>.</p>
+
+<h2 id="camera-wifi">Turn on camera Wi-Fi</h2>
+<p>ShotSyncCam connects over the camera’s own Wi-Fi network. If you do not see a camera network on your iPhone, the camera’s Wi-Fi may be off. On a VIEVU LE4 you can turn it on from the camera’s USB serial console.</p>
+<ol>
+<li>Connect the camera to a computer using the serial / FTDI leg of the camera’s USB Y-cable (the data or console connector, not a charge-only cable).</li>
+<li>Open a serial terminal at <b>115200 8N1</b> (115200 baud, 8 data bits, no parity, 1 stop bit). Examples: <code>screen</code> or <code>picocom</code> on macOS and Linux, or PuTTY on Windows.</li>
+<li>Press Enter until you see the <code>cmd&gt;</code> prompt.</li>
+<li>Type <code>custom wifi on</code> and press Enter.</li>
+<li>Check that a camera network appears in your Wi-Fi list. The name is typically of the form <code>LE4-XXXXXX</code>. The broadcast name may differ from the serial printed on the camera label.</li>
+<li>To turn Wi-Fi off later, type <code>custom wifi off</code> at the same <code>cmd&gt;</code> prompt and press Enter.</li>
+</ol>
+<p>The Wi-Fi password is the factory default printed in your camera documentation.</p>
+<p>The access point may not stay on after the camera powers off. If the network disappears after a restart, run <code>custom wifi on</code> again.</p>
+<p><b>Safety:</b> Do not run other console commands unless you understand them. This is unofficial guidance, not from the camera manufacturer, and you use it at your own risk. ShotSyncCam is a third-party companion app and is not affiliated with or endorsed by VIEVU.</p>
+
+<h2 id="pick-list">Choosing among several cameras</h2>
+<p>On the Connect screen, tap <b>Connect to Camera Wi-Fi</b>:</p>
+<ul>
+<li>If more than one camera network is saved in the app, a pick list appears. Choose the network you want, or tap <b>Add camera</b> and enter its Wi-Fi name.</li>
+<li>If exactly one camera network is saved, the app joins that network.</li>
+<li>If none are saved yet, the app joins any matching camera network and then shows which name it joined.</li>
+</ul>
+<p>Successfully joined camera names are remembered for next time. After you connect, the Connect screen details show the real camera network name. Use <b>Reconnect to Home Wi-Fi</b> when you are finished.</p>
+
+<h2>FAQ</h2>
+<p><b>Can't connect?</b> First make sure the camera’s Wi-Fi is on (see <a href="#camera-wifi">Turn on camera Wi-Fi</a>). Allow Location and Local Network access in Settings › ShotSyncCam so the app can read the current network name and talk to the camera. If you have more than one camera, use the pick list to choose the right network.</p>
+<p><b>Where are my clips?</b> In the app's Library, and in the Files app under On My iPhone › ShotSyncCam.</p>
+<p><b>Camera time wrong?</b> Open Status and tap Sync Clock.</p>
+<p><b>Will other cameras work?</b> Not yet; more camera profiles may be added.</p>
+<p>For help, email us and include your iPhone model and iOS version.</p>
+<p>Contact: <a href="mailto:mtvernonmobile@gmail.com">mtvernonmobile@gmail.com</a></p>
+<p>&copy; 2026 Edward Clark</p>
+</body>
+</html>
