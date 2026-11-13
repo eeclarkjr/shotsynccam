@@ -28,6 +28,7 @@ li{margin:.4em 0}
   </ul>
 </li>
 <li>Without the serial cable or that software, you cannot turn Wi-Fi on for a camera that was saved as Off.</li>
+<li><b>Advanced:</b> with the serial cable you can also make the camera turn Wi-Fi on by itself at every power-on. See <a href="#wifi-at-boot">Keep camera Wi-Fi on at every power-on</a>.</li>
 <li>If the camera will not stay powered on without being plugged in, the battery may be worn or flat. Charge it fully and try again.</li>
 <li><b>Before buying a used LE4:</b> ask whether its Wi-Fi network appears when the camera is powered on.</li>
 </ul>
@@ -44,6 +45,44 @@ li{margin:.4em 0}
 <p>The Wi-Fi password is the factory default printed in your camera documentation.</p>
 <p>The serial <code>custom wifi on</code> command does not change the camera’s saved Wi-Fi preference. If the network disappears after the camera powers off, run it again (or use VIEVU’s software to save Wi-Fi On, if you still have it).</p>
 <p><b>Safety:</b> Do not run other console commands unless you understand them. This is unofficial guidance, not from the camera manufacturer, and you use it at your own risk. ShotSyncCam is a third-party companion app and is not affiliated with or endorsed by VIEVU.</p>
+
+<h2 id="wifi-at-boot">Advanced: keep camera Wi-Fi on at every power-on</h2>
+<p>For a camera whose saved Wi-Fi setting is Off, the steps below change the setting so the camera turns its Wi-Fi on by itself every time it starts, the way a new camera does. They have been tested on one VIEVU LE4. Treat them as experimental.</p>
+
+<p><b>Requirements</b></p>
+<ul>
+<li>The camera’s special USB-to-serial (FTDI) console cable: the serial / console leg of the camera’s USB Y-cable.</li>
+<li>A computer with a serial terminal set to <b>115200 8N1</b>, for example <code>picocom -b 115200 /dev/ttyUSB0</code> on Linux or <code>screen</code> on macOS.</li>
+<li>This <b>cannot</b> be done from the iPhone app, over the camera’s Wi-Fi, or with a normal USB cable. The change is made through the serial console, and changing camera settings over Wi-Fi did not save it.</li>
+</ul>
+
+<p><b>Warning:</b> This changes values in the camera’s memory with low-level console commands. It is unofficial, advanced, and done entirely at your own risk. A typing mistake can change the wrong setting or make the camera unusable. Keep the camera on its charger the whole time. Type one command at a time and wait for the <code>cmd&gt;</code> prompt before typing the next. Stop if anything does not match what is described here.</p>
+
+<ol>
+<li>Connect the console cable, open the serial terminal, and press Enter until you see <code>cmd&gt;</code>.</li>
+<li>Find the camera’s live settings by typing:<br><code>search l 0xa0000000 +0x800000 0x10010101</code><br>It prints a list of addresses, usually about eight. The addresses change every time the camera starts, so always search again after a restart.</li>
+<li>For each address <i>H</i> in the list, subtract 8 (hex) to get <i>S</i>, then check it with <code>dump b <i>S</i> +0x20</code>. Keep only the addresses whose two output lines read exactly:<br>
+<code>00 00 00 00 05 ff 00 00-01 01 01 10 00 00 00 00</code><br>
+<code>01 02 00 00 00 00 00 00-02 01 01 01 00 00 00 00</code><br>
+In our test, four addresses matched. The others hold unrelated data, so do not change them. If none match, stop.</li>
+<li>For each matching <i>S</i>, add 1E (hex) to get the target byte, set it to 01, then check it:<br>
+<code>fill b <i>S+0x1e</i> +1 0x01</code><br>
+<code>dump b <i>S+0x10</i> +0x10</code><br>
+The check must read exactly <code>01 02 00 00 00 00 00 00-02 01 01 01 00 00 01 00</code>. If any other value changed, stop and power the camera off and on before doing anything else. Changes in memory are lost at power-off unless the camera saves them.<br>
+Example: if <i>S</i> is <code>0xa05df6d0</code>, type <code>fill b 0xa05df6ee +1 0x01</code>, then check with <code>dump b 0xa05df6e0 +0x10</code>.</li>
+<li>Close the serial terminal. Turn the camera off <b>normally</b> with its power button. Do not unplug it or let the battery die: the camera saves its settings during a normal power-off. Wait 30 seconds, then turn it on.</li>
+</ol>
+
+<p><b>Check it worked:</b> without typing <code>custom wifi on</code>, wait about a minute after power-on. A network named like <code>LE4-XXXXXX</code> should appear in your Wi-Fi list. Power-cycle once more and check again to confirm it stays on.</p>
+
+<p><b>Undo:</b> repeat steps 1–5, but in step 4 type <code>0x00</code> instead of <code>0x01</code>. The check line then ends in <code>00 00 00 00</code>. Then turn the camera off normally.</p>
+
+<p><b>Notes:</b></p>
+<ul>
+<li>Writing the value straight to the camera’s flash storage does not work: the camera overwrites it with its in-memory settings at power-off. Changing a camera setting over Wi-Fi from a computer also did not save it.</li>
+<li>Not yet confirmed: whether the setting survives a fully drained battery, a factory reset, or a firmware update. If Wi-Fi stops starting on its own, repeat the steps.</li>
+<li>Do not use other console commands, especially ones that erase, write, or format storage. If the camera stops working normally, stop and contact us before trying anything else.</li>
+</ul>
 
 <h2 id="pick-list">Choosing among several cameras</h2>
 <p>On the Connect screen, tap <b>Connect to Camera Wi-Fi</b>:</p>
