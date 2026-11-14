@@ -10,7 +10,7 @@ ShotSyncCam is a third-party companion app and is not affiliated with or endorse
 
 ## Features
 
-- **Connect** — Join camera Wi-Fi from the app, reconnect to your usual network when finished, remember previously joined cameras, show a pick list when more than one is saved, and add a camera by Wi-Fi name
+- **Connect** — Join camera Wi-Fi from the app, reconnect to your usual network when finished, remember previously joined cameras, show a pick list of saved cameras, and add a camera by Wi-Fi name
 - **Status** — Read camera status (including battery and firmware) and sync the camera clock to the phone
 - **Camera (live)** — Live view, capture still, start/stop recording, and a rotate control for cameras without an orientation sensor
 - **Pull** — Download clips from the camera with progress, speed, ETA, and resumable transfers
@@ -27,7 +27,7 @@ ShotSyncCam is a third-party companion app and is not affiliated with or endorse
 
 1. Power on the camera and confirm its Wi-Fi network appears (name like `LE4-XXXXXX`).
 2. Open ShotSyncCam and allow **Location** and **Local Network** when asked (Location is used only to read the current Wi-Fi name).
-3. On the Connect tab, tap **Connect to Camera Wi-Fi**. If several cameras are saved, choose one from the pick list, or tap **Add camera** and enter the Wi-Fi name.
+3. On the Connect tab, tap **Connect to Camera Wi-Fi**. Choose a saved camera from the pick list, tap **Add camera** and enter the Wi-Fi name, or join any matching camera network.
 4. Use Status, Camera, Pull, and Library as needed. When finished, tap **Reconnect to Home Wi-Fi**.
 
 Full steps, including how to turn camera Wi-Fi on from a serial console: [Support](support.html).
